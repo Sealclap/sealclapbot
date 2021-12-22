@@ -35,5 +35,4 @@ client.on('message', (channel, tags, message, self) => {
 	if(command === 'echo') {
 		client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
 	};
-    };
 });
