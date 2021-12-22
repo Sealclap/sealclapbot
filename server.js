@@ -10,7 +10,7 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_TOKEN
 	},
-	channels: [ 'sealclap' ]
+	channels: [ 'schwamgames', 'sealclap' ]
 });
 
 client.connect();
@@ -35,8 +35,4 @@ client.on('message', (channel, tags, message, self) => {
 	if(command === 'echo') {
 		client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
 	};
-
-    if(command === 'halnett') {
-        client.say(channel, `@${tags.username}, you should know that @ElementalityNJ hates this sound!`);
-    };
 });
