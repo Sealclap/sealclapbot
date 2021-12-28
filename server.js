@@ -36,7 +36,11 @@ client.on('message', (channel, tags, message, self) => {
 		client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
 	};
 
-	if(command.toLowerCase() === 'casey' || command.toLowerCase() === 'hully') {
+	if(command.toLowerCase() === 'casey') {
 		client.say(channel, `@casey_robbitz is a big cutie!`);
+	};
+	
+	if(command.toLowerCase() === 'hully') {
+		client.say(channel, `@hullygee is a big cutie!`);
 	};
 });
