@@ -48,8 +48,8 @@ client.on('message', (channel, tags, message, self) => {
 		client.say(channel, `@Sealclap is a bald headed fuck.`);
 	};
 	
+	var dumb = 1;
 	if(command.toLowerCase() === 'dumb' || command.toLowerCase() === 'stupid' || command.toLowerCase() === 'idiot') {
-		var dumb = 0;
 		dumb++;
 		client.say(channel, `@${tags.username}, ${dumb} dumb things have been said or done in this channel.`);
 	};
