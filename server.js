@@ -51,6 +51,6 @@ client.on('message', (channel, tags, message, self) => {
 	if(command.toLowerCase() === 'dumb' || command.toLowerCase() === 'stupid' || command.toLowerCase() === 'idiot') {
 		var dumb = 0;
 		dumb++;
-		client.say(channel, `@{tags.username}, {dumb} dumb things have been said or done in this channel.`);
+		client.say(channel, `@${tags.username}, ${dumb} dumb things have been said or done in this channel.`);
 	};
 });
