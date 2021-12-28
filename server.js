@@ -41,6 +41,10 @@ client.on('message', (channel, tags, message, self) => {
 	};
 	
 	if(command.toLowerCase() === 'hully') {
-		client.say(channel, `@hullygee is a big cutie!`);
+		client.say(channel, `@HullyGee is a big cutie!`);
+	};
+	
+	if(command.toLowerCase() === 'baldheadedfuck') {
+		client.say(channel, `@Sealclap is a bald headed fuck.`)
 	};
 });
