@@ -48,7 +48,7 @@ client.on('message', (channel, tags, message, self) => {
 		client.say(channel, `@Sealclap is a bald headed fuck.`);
 	};
 
-	if(command.toLowerCase() === 100) {
+	if(command.toLowerCase() === 'hundred') {
 		client.say{channel, `@SchwamGames has died 100 times! Can you believe it?!`);
 	};
 });
