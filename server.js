@@ -62,7 +62,6 @@ client.on('message', (channel, tags, message, self) => {
 
     // For the Phasmo overlay during stream
 	// Starting with the maps
-	var currentMap;
 	const tanglewood = "Tanglewood Street House";
 	const willow = "Willow Street House";
 	const edgefield = "Edgefield Street House";
@@ -75,14 +74,12 @@ client.on('message', (channel, tags, message, self) => {
 	const camp = "Maple Lodge Campsite";
 
 	// Next, difficulties
-	var currentDifficulty;
 	const amateur = "amateur";
 	const intermediate = "intermediate";
 	const professional = "professional";
 	const nightmare = "nightmare";
 
 	// Now optional objectives
-	var objective;
 	const emf = 'find evidence of paranormal activity with an EMF reader';
 	const photo = 'capture a photo of the ghost';
 	const motion = 'detect a ghost\'s presence with a motion sensor';
@@ -104,6 +101,7 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if(command.toLowerCase() === 'map') {
+		var currentMap;
 		if(args === 'bl') {
 			currentMap = bleasdale;
 		} else if(args === 'ed') {
@@ -131,6 +129,7 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if(command.toLowerCase() === 'diff') {
+		var currentDifficulty;
 		if(args === 'a') {
 			currentDifficulty = amateur;
 		} else if(args === 'i') {
@@ -190,6 +189,7 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if(command.toLowerCase() === 'oo') {
+		var objective;
 		if(args === 'ca') {
 			objective = candle;
 		} else if(args === 'cr') {
