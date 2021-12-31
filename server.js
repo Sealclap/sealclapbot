@@ -26,6 +26,10 @@ client.on('message', (channel, tags, message, self) => {
     if(tags.username === 'buttsbot' && message.toLowerCase() !== ':d') {
         client.say(channel, 'Buttsbot yes');
     };
+	
+    if(message === 'DEATH COUNT: 100 eelguyNO eelguyFAIL') {
+	client.say(channel, '@SchwamGames has died 100 times? And we all really just sat here and watched? #worthit');
+    };
 
     if(self || !message.startsWith('!')) return;
 
