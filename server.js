@@ -47,10 +47,8 @@ client.on('message', (channel, tags, message, self) => {
 	if(command.toLowerCase() === 'baldheadedfuck') {
 		client.say(channel, `@Sealclap is a bald headed fuck.`);
 	};
-	
-	var dumb = 1;
-	if(command.toLowerCase() === 'dumb' || command.toLowerCase() === 'stupid' || command.toLowerCase() === 'idiot') {
-		dumb++;
-		client.say(channel, `@${tags.username}, ${dumb} dumb things have been said or done in this channel.`);
+
+	if(command.toLowerCase() ==='100') {
+		client.say{channel, `@SchwamGames has died 100 times! Can you believe it?!`);
 	};
 });
