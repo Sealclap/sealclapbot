@@ -61,37 +61,6 @@ client.on('message', (channel, tags, message, self) => {
     };
 
     // For the Phasmo overlay during stream
-	// Starting with the maps
-	const tanglewood = "Tanglewood Street House";
-	const willow = "Willow Street House";
-	const edgefield = "Edgefield Street House";
-	const ridgeview = "Ridgeview Road House";
-	const grafton = "Grafton Farmhouse";
-	const bleasdale = "Bleasdale Farmhouse";
-	const school = "Brownstone High School";
-	const prison = "Prison";
-	const asylum = "Asylum";
-	const camp = "Maple Lodge Campsite";
-
-	// Next, difficulties
-	const amateur = "amateur";
-	const intermediate = "intermediate";
-	const professional = "professional";
-	const nightmare = "nightmare";
-
-	// Now optional objectives
-	const emf = 'find evidence of paranormal activity with an EMF reader';
-	const photo = 'capture a photo of the ghost';
-	const motion = 'detect a ghost\'s presence with a motion sensor';
-	const crucifix = 'prevent the ghost from hunting with a crucifix';
-	const event = 'have a member of the team witness a ghost event';
-	const smudge = 'cleanse the area near the ghost using smudge sticks';
-	const salt = 'get the ghost to walk through salt';
-	const repel = 'repel the ghost with a smudge stick while it\'s chasing someone';
-	const candle = 'get the ghost to blow out a candle';
-	const escape = 'have a member of the team escape during a hunt';
-	const sanity = 'get an average sanity below 25%';
-
 	if(command.toLowerCase() === 'gr') {
 		client.say(channel, 'Just resetting the board.');
 	};
@@ -101,27 +70,27 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if(command.toLowerCase() === 'map') {
-		var currentMap;
+		var currentMap = '';
 		if(args === 'bl') {
-			currentMap = bleasdale;
+			currentMap = 'Bleasdale Farmhouse';
 		} else if(args === 'ed') {
-			currentMap = edgefield;
+			currentMap = 'Edgefield Street House';
 		} else if(args === 'gr') {
-			currentMap = grafton;
+			currentMap = 'Grafton Farmhouse';
 		} else if(args === 'ri') {
-			currentMap = ridgeview;
+			currentMap = 'Ridgeview Road House';
 		} else if(args === 'ta') {
-			currentMap = tanglewood;
+			currentMap = 'Tanglewood Street House';
 		} else if(args === 'wi') {
-			currentMap = willow;
+			currentMap = 'Willow Street House';
 		} else if(args === 'hs') {
-			currentMap = school;
+			currentMap = 'Brownstone High School';
 		} else if(args === 'pr') {
-			currentMap = prison;
+			currentMap = 'Prison';
 		} else if(args === 'as') {
-			currentMap = asylum;
+			currentMap = 'Asylum';
 		} else if(args === 'ca') {
-			currentMap = camp;
+			currentMap = 'Maple Lodge Campsite';
 		} else {
 			currentMap = 'unknown';
 		};
@@ -129,15 +98,15 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if(command.toLowerCase() === 'diff') {
-		var currentDifficulty;
+		var currentDifficulty = '';
 		if(args === 'a') {
-			currentDifficulty = amateur;
+			currentDifficulty = 'amateur';
 		} else if(args === 'i') {
-			currentDifficulty = intermediate;
+			currentDifficulty = 'intermediate';
 		} else if(args === 'p') {
-			currentDifficulty = professional;
+			currentDifficulty = 'professional';
 		} else if(args === 'n') {
-			currentDifficulty = nightmare;
+			currentDifficulty = 'nightmare';
 		} else {
 			currentDifficulty = 'unknown';
 		};
@@ -189,29 +158,29 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if(command.toLowerCase() === 'oo') {
-		var objective;
+		var objective = '';
 		if(args === 'ca') {
-			objective = candle;
+			objective = 'get the ghost to blow out a candle';
 		} else if(args === 'cr') {
-			objective = crucifix;
+			objective = 'prevent the ghost from hunting with a crucifix';
 		} else if(args === 'em') {
-			objective = emf;
+			objective = 'find evidence of paranormal activity with an EMF reader';
 		} else if(args === 'es') {
-			objective = escape;
+			objective = 'have a member of the team escape during a hunt';
 		} else if(args === 'ev') {
-			objective = event;
+			objective = 'have a member of the team witness a ghost event';
 		} else if(args === 'hu') {
-			objective = repel;
+			objective = 'repel the ghost with a smudge stick while it\'s chasing someone';
 		} else if(args === 'mo') {
-			objective = motion;
+			objective = 'detect a ghost\'s presence with a motion sensor';
 		} else if(args === 'ph') {
-			objective = photo;
+			objective = 'capture a photo of the ghost';
 		} else if(args === 'sa') {
-			objective = salt;
+			objective = 'get the ghost to walk through salt';
 		} else if(args === 'san') {
-			objective = sanity;
+			objective = 'get an average sanity below 25%';
 		} else if(args === 'sm') {
-			objective = smudge;
+			objective = 'cleanse the area near the ghost using smudge sticks';
 		} else {
 			objective = 'find out what type of ghost we\'re dealing with';
 		};
