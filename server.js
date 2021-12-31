@@ -71,25 +71,25 @@ client.on('message', (channel, tags, message, self) => {
 
 	if(command.toLowerCase() === 'map') {
 		var currentMap = '';
-		if(args === 'bl') {
+		if(args[0] === 'bl') {
 			currentMap = 'Bleasdale Farmhouse';
-		} else if(args === 'ed') {
+		} else if(args[0] === 'ed') {
 			currentMap = 'Edgefield Street House';
-		} else if(args === 'gr') {
+		} else if(args[0] === 'gr') {
 			currentMap = 'Grafton Farmhouse';
-		} else if(args === 'ri') {
+		} else if(args[0] === 'ri') {
 			currentMap = 'Ridgeview Road House';
-		} else if(args === 'ta') {
+		} else if(args[0] === 'ta') {
 			currentMap = 'Tanglewood Street House';
-		} else if(args === 'wi') {
+		} else if(args[0] === 'wi') {
 			currentMap = 'Willow Street House';
-		} else if(args === 'hs') {
+		} else if(args[0] === 'hs') {
 			currentMap = 'Brownstone High School';
-		} else if(args === 'pr') {
+		} else if(args[0] === 'pr') {
 			currentMap = 'Prison';
-		} else if(args === 'as') {
+		} else if(args[0] === 'as') {
 			currentMap = 'Asylum';
-		} else if(args === 'ca') {
+		} else if(args[0] === 'ca') {
 			currentMap = 'Maple Lodge Campsite';
 		} else {
 			currentMap = 'unknown';
@@ -99,13 +99,13 @@ client.on('message', (channel, tags, message, self) => {
 
 	if(command.toLowerCase() === 'diff') {
 		var currentDifficulty = '';
-		if(args === 'a') {
+		if(args[0] === 'a') {
 			currentDifficulty = 'amateur';
-		} else if(args === 'i') {
+		} else if(args[0] === 'i') {
 			currentDifficulty = 'intermediate';
-		} else if(args === 'p') {
+		} else if(args[0] === 'p') {
 			currentDifficulty = 'professional';
-		} else if(args === 'n') {
+		} else if(args[0] === 'n') {
 			currentDifficulty = 'nightmare';
 		} else {
 			currentDifficulty = 'unknown';
@@ -159,27 +159,27 @@ client.on('message', (channel, tags, message, self) => {
 
 	if(command.toLowerCase() === 'oo') {
 		var objective = '';
-		if(args === 'ca') {
+		if(args[0] === 'ca') {
 			objective = 'get the ghost to blow out a candle';
-		} else if(args === 'cr') {
+		} else if(args[0] === 'cr') {
 			objective = 'prevent the ghost from hunting with a crucifix';
-		} else if(args === 'em') {
+		} else if(args[0] === 'em') {
 			objective = 'find evidence of paranormal activity with an EMF reader';
-		} else if(args === 'es') {
+		} else if(args[0] === 'es') {
 			objective = 'have a member of the team escape during a hunt';
-		} else if(args === 'ev') {
+		} else if(args[0] === 'ev') {
 			objective = 'have a member of the team witness a ghost event';
-		} else if(args === 'hu') {
+		} else if(args[0] === 'hu') {
 			objective = 'repel the ghost with a smudge stick while it\'s chasing someone';
-		} else if(args === 'mo') {
+		} else if(args[0] === 'mo') {
 			objective = 'detect a ghost\'s presence with a motion sensor';
-		} else if(args === 'ph') {
+		} else if(args[0] === 'ph') {
 			objective = 'capture a photo of the ghost';
-		} else if(args === 'sa') {
+		} else if(args[0] === 'sa') {
 			objective = 'get the ghost to walk through salt';
-		} else if(args === 'san') {
+		} else if(args[0] === 'san') {
 			objective = 'get an average sanity below 25%';
-		} else if(args === 'sm') {
+		} else if(args[0] === 'sm') {
 			objective = 'cleanse the area near the ghost using smudge sticks';
 		} else {
 			objective = 'find out what type of ghost we\'re dealing with';
