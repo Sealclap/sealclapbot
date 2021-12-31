@@ -36,11 +36,11 @@ client.on('message', (channel, tags, message, self) => {
     const args = message.slice(1).split(' ');
     const command = args.shift().toLowerCase();
 
-    if(command.toLowerCase() === 'echo' && tags.username !== 'Sealclap') {
+    if(command.toLowerCase() === 'echo' && tags.username !== 'sealclap') {
 	client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
     };
 	
-    if(command.toLowerCase() === 'echo' && tags.username === 'Sealclap') {
+    if(command.toLowerCase() === 'echo' && tags.username === 'sealclap') {
 	client.say(channel, `${args.join(' ')}`);
     };
 
