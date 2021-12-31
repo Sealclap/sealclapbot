@@ -100,7 +100,7 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if(command.toLowerCase() === 'gn') {
-		client.say(channel, `Ghost name set to ${args}.`);
+		client.say(channel, `Ghost name set to ${args.join(' ')}.`);
 	};
 
 	if(command.toLowerCase() === 'map') {
