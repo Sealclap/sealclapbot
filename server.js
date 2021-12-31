@@ -49,6 +49,6 @@ client.on('message', (channel, tags, message, self) => {
     };
 
     if(command.toLowerCase() === 'hundred') {
-	client.say{channel, `@SchwamGames has died 100 times! Can you believe it?!`);
+	client.say(channel, `@SchwamGames has died 100 times! Can you believe it?!`);
     };
 });
