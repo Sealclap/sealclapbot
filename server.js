@@ -20,7 +20,7 @@ client.on('message', (channel, tags, message, self) => {
 	console.log(`${tags['display-name']}: ${message}`);
 
     if(message.toLowerCase() === 'hello' || message.toLowerCase() === 'hey' || message.toLowerCase() === 'hi') {
-        client.say(channel, `Hey there, @${tags.username}!`)
+        client.say(channel, `Hey there, @${tags.username}!`);
     };
 
     if(tags.username === 'buttsbot' && message.toLowerCase() !== ':d') {
@@ -29,26 +29,26 @@ client.on('message', (channel, tags, message, self) => {
 
     if(self || !message.startsWith('!')) return;
 
-	const args = message.slice(1).split(' ');
-	const command = args.shift().toLowerCase();
+    const args = message.slice(1).split(' ');
+    const command = args.shift().toLowerCase();
 
-	if(command.toLowerCase() === 'echo') {
-		client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
-	};
+    if(command.toLowerCase() === 'echo') {
+	client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
+    };
 
-	if(command.toLowerCase() === 'casey') {
-		client.say(channel, `@casey_robbitz is a big cutie!`);
-	};
+    if(command.toLowerCase() === 'casey') {
+	client.say(channel, `@casey_robbitz is a big cutie!`);
+    };
 	
-	if(command.toLowerCase() === 'hully') {
-		client.say(channel, `@HullyGee is a big cutie!`);
-	};
+    if(command.toLowerCase() === 'hully') {
+	client.say(channel, `@HullyGee is a big cutie!`);
+    };
 	
-	if(command.toLowerCase() === 'baldheadedfuck') {
-		client.say(channel, `@Sealclap is a bald headed fuck.`);
-	};
+    if(command.toLowerCase() === 'baldheadedfuck') {
+	client.say(channel, `@Sealclap is a bald headed fuck.`);
+    };
 
-	if(command.toLowerCase() === 'hundred') {
-		client.say{channel, `@SchwamGames has died 100 times! Can you believe it?!`);
-	};
+    if(command.toLowerCase() === 'hundred') {
+	client.say{channel, `@SchwamGames has died 100 times! Can you believe it?!`);
+    };
 });
