@@ -1,5 +1,8 @@
-require('dotenv').config();
-const tmi = require('tmi.js');
+import dotenv from 'dotenv';
+dotenv.config();
+import tmi from 'tmi.js';
+import fetch from 'node-fetch';
+import { arg, index } from 'mathjs';
 
 const client = new tmi.Client({
     connection: {
@@ -10,25 +13,52 @@ const client = new tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_TOKEN
 	},
-	channels: [ 'sealclap', 'schwamgames' ]
+	channels: [ 'sealclap' ]
 });
 
 client.connect();
+console.log(`server.js connected to ${client.opts.channels.join(', ')}`);
+
+client.on('connected', (address, port) => {
+	if(twitchPlaysLive) {
+		setInterval(timedMessage, 600000)
+		function timedMessage() {
+			client.say('sealclap', `This game is now interactive! Type '!play' to see the list of commands or type '!chances' to see the likelihood of each command!`);
+		};
+	};
+});
+
+async function fetchTextApi(url) {
+	const response = await fetch(url);
+	const data = await response.text();
+	return data;
+};
+
+async function fetchJsonApi(url) {
+	const response = await fetch(url);
+	const data = await response.json();
+	return data;
+};
+
+// For TwitchPlays integration -- Just change .env variable
+var twitchPlaysLive = false;
+const playCommands = process.env.PHASPLAY.split(', ');
+const randomCommands = process.env.PHASCOMMANDS.split(', ');
+const twentyPercent = process.env.PHASTWENTY.split(', ');
+const tenPercent = process.env.PHASTEN.split(', ');
+const fivePercent = process.env.PHASFIVE.split(', ');
+const twoPercent = process.env.PHASTWO.split(', ');
+const pointOnePercent = process.env.PHASPOINTONE.split(', ');
 
 client.on('message', (channel, tags, message, self) => {
-	// "Alca: Hello, World!"
-	console.log(`${tags['display-name']}: ${message}`);
 
-    if(message.toLowerCase() === 'hello' || message.toLowerCase() === 'hey' || message.toLowerCase() === 'hi') {
+	const isMod = tags.mod || tags['user-type'] === 'mod';
+	const isBroadcaster = channel.slice(1) === tags.username;
+	const isModUp = isMod || isBroadcaster;
+	const myChannel = channel.slice(1) === process.env.MY_CHANNEL;
+
+    if((message.toLowerCase() === 'hello' || message.toLowerCase() === 'hey' || message.toLowerCase() === 'hi') && myChannel) {
         client.say(channel, `Hey there, @${tags.username}!`);
-    };
-
-    if(tags.username === 'buttsbot' && message.toLowerCase() !== ':d') {
-        client.say(channel, 'Buttsbot yes');
-    };
-	
-    if(message === 'DEATH COUNT: 100 eelguyNO eelguyFAIL') {
-		client.say(channel, '@SchwamGames has died 100 times? And we all really just sat here and watched? #worthit');
     };
 
     if(self || !message.startsWith('!')) return;
@@ -36,158 +66,91 @@ client.on('message', (channel, tags, message, self) => {
     const args = message.slice(1).split(' ');
     const command = args.shift().toLowerCase();
 
-
-	// So other users can't exploit SealclapBot's admin rights
-    if(command.toLowerCase() === 'echo' && tags.username !== 'sealclap') {
-		client.say(channel, `@${tags.username}, you said: "${args.join(' ')}"`);
-    };
-	
-    if(command.toLowerCase() === 'echo' && tags.username === 'sealclap') {
-		client.say(channel, `${args.join(' ')}`);
-    };
-
-	// Specifically for Schwam's channel
-    if(command.toLowerCase() === 'casey') {
-		client.say(channel, `@casey_robbitz is a big cutie!`);
-    };
-	
-    if(command.toLowerCase() === 'hully') {
-		client.say(channel, `@HullyGee is a big cutie!`);
-    };
-	
-	// For Chook <3
-    if(command.toLowerCase() === 'baldheadedfuck') {
-		client.say(channel, `@Sealclap is a bald headed fuck.`);
-    };
-
-    // For the Phasmo overlay during stream
-	if(command.toLowerCase() === 'gr') {
-		client.say(channel, 'Just resetting the board.');
+	if(command === 'lurk' && myChannel) {
+		client.say(channel, `${tags.username} is now lurking. <3`);
 	};
 
-	if(command.toLowerCase() === 'gn') {
-		client.say(channel, `Ghost name set to ${args.join(' ')}.`);
+	if(command === 'raid' && myChannel) {
+		client.say(channel, `TombRaid GET CLAPPED!! TombRaid GET CLAPPED!! TombRaid GET CLAPPED!! TombRaid`);
 	};
 
-	if(command.toLowerCase() === 'map') {
-		var currentMap = '';
-		if(args[0] === 'bl') {
-			currentMap = 'Bleasdale Farmhouse';
-		} else if(args[0] === 'ed') {
-			currentMap = 'Edgefield Street House';
-		} else if(args[0] === 'gr') {
-			currentMap = 'Grafton Farmhouse';
-		} else if(args[0] === 'ri') {
-			currentMap = 'Ridgeview Road House';
-		} else if(args[0] === 'ta') {
-			currentMap = 'Tanglewood Street House';
-		} else if(args[0] === 'wi') {
-			currentMap = 'Willow Street House';
-		} else if(args[0] === 'hs') {
-			currentMap = 'Brownstone High School';
-		} else if(args[0] === 'pr') {
-			currentMap = 'Prison';
-		} else if(args[0] === 'as') {
-			currentMap = 'Asylum';
-		} else if(args[0] === 'ca') {
-			currentMap = 'Maple Lodge Campsite';
-		} else {
-			currentMap = 'unknown';
+	if(command === 'so' && isModUp && myChannel) {
+		client.say(channel, `Please give ${args[0]} a follow at https://www.twitch.tv/${args.join('').replace(/[^\w]/, '')}`);
+	};
+
+	if(command === 'multistream' && isModUp && myChannel) {
+		client.say(channel, `We're streaming with ${args[0]}! Watch us both at https://multistre.am/${process.env.MY_CHANNEL}/${args.join('')}/layout4`);
+	};
+
+	if((command === 'discord' || command === 'dc') && myChannel) {
+		client.say(channel, `Join the Big Flick Energy discord! ${process.env.DISCORD}`);
+	};
+
+	if(command === 'twitchplays' && isBroadcaster) {
+		if(!twitchPlaysLive) {
+			twitchPlaysLive = true;
+		} else if(twitchPlaysLive) {
+			twitchPlaysLive = false;
 		};
-		client.say(channel, `Map set to ${currentMap}.`);
 	};
 
-	if(command.toLowerCase() === 'diff') {
-		var currentDifficulty = '';
-		if(args[0] === 'a') {
-			currentDifficulty = 'amateur';
-		} else if(args[0] === 'i') {
-			currentDifficulty = 'intermediate';
-		} else if(args[0] === 'p') {
-			currentDifficulty = 'professional';
-		} else if(args[0] === 'n') {
-			currentDifficulty = 'nightmare';
-		} else {
-			currentDifficulty = 'unknown';
+	if(command === 'play' && twitchPlaysLive) {
+		client.say(channel, `You can use the following commands to interact: ${playCommands.join(', ')}`);
+	};
+
+	if(command === 'random' && twitchPlaysLive) {
+		const res = Math.floor(Math.random() * randomCommands.length);
+		client.say(channel, `${randomCommands[res]}`);
+	};
+
+	if(command === 'chances' && twitchPlaysLive) {
+		client.say(channel, `20% chance: ${twentyPercent.join(', ')}`);
+		client.say(channel, `10% chance: ${tenPercent.join(', ')}`);
+		client.say(channel, `5% chance: ${fivePercent.join(', ')}`);
+		client.say(channel, `2% chance: ${twoPercent.join(', ')}`);
+		client.say(channel, `0.1% chance: ${pointOnePercent.join(', ')}`);
+	};
+
+	// Calling APIs
+	if((command === 'ranks' || command === 'rank') && myChannel) {
+		fetchTextApi(process.env.RL_RANKS)
+		.then(data => client.say(channel, `${data}`));
+	};
+
+	if(command === 'accountage' && myChannel) {
+		if(args.length === 0) {
+			fetchTextApi(`https://decapi.me/twitch/accountage/${tags.username}`)
+			.then(data => client.say(channel, `@${tags.username}'s account is ${data} old.`));
+		} else if(args.length !== 0) {
+			fetchTextApi(`https://decapi.me/twitch/accountage/${args[0].replace(/[^\w]/, '')}`)
+			.then(data => client.say(channel, `@${tags.username}, ${args[0]}'s account is ${data} old.`));
 		};
-		client.say(channel, `Difficulty set to ${currentDifficulty}.`);
 	};
 
-	if(command.toLowerCase() === 'deathsup') {
-		client.say(channel, 'Oops! We died again! Adding to the death total.');
-	};
-
-	if(command.toLowerCase() === 'deathsdown') {
-		client.say(channel, 'Just correcting the death total.');
-	};
-
-	if(command.toLowerCase() === 'wrongup') {
-		client.say(channel, 'Oops! We guessed wrong! Adding to the incorrect guess total.');
-	};
-
-	if(command.toLowerCase() === 'wrongdown') {
-		client.say(channel, 'Just correcting the incorrect guess total.');
-	};
-
-	if(command.toLowerCase() === 'ge') {
-		client.say(channel, 'We just got EMF 5!');
-	};
-
-	if(command.toLowerCase() === 'gs') {
-		client.say(channel, 'We just got spirit box!');
-	};
-
-	if(command.toLowerCase() === 'gf') {
-		client.say(channel, 'We just got fingerprints!');
-	};
-
-	if(command.toLowerCase() === 'go') {
-		client.say(channel, 'We just got ghost orbs!');
-	};
-
-	if(command.toLowerCase() === 'gw') {
-		client.say(channel, 'We just got ghost writing!');
-	};
-
-	if(command.toLowerCase() === 'gt') {
-		client.say(channel, 'We just got freezing temps!');
-	};
-
-	if(command.toLowerCase() === 'gd') {
-		client.say(channel, 'We just got dots!');
-	};
-
-	if(command.toLowerCase() === 'oo') {
-		var objective = '';
-		if(args[0] === 'ca') {
-			objective = 'get the ghost to blow out a candle';
-		} else if(args[0] === 'cr') {
-			objective = 'prevent the ghost from hunting with a crucifix';
-		} else if(args[0] === 'em') {
-			objective = 'find evidence of paranormal activity with an EMF reader';
-		} else if(args[0] === 'es') {
-			objective = 'have a member of the team escape during a hunt';
-		} else if(args[0] === 'ev') {
-			objective = 'have a member of the team witness a ghost event';
-		} else if(args[0] === 'hu') {
-			objective = 'repel the ghost with a smudge stick while it\'s chasing someone';
-		} else if(args[0] === 'mo') {
-			objective = 'detect a ghost\'s presence with a motion sensor';
-		} else if(args[0] === 'ph') {
-			objective = 'capture a photo of the ghost';
-		} else if(args[0] === 'sa') {
-			objective = 'get the ghost to walk through salt';
-		} else if(args[0] === 'san') {
-			objective = 'get an average sanity below 25%';
-		} else if(args[0] === 'sm') {
-			objective = 'cleanse the area near the ghost using smudge sticks';
-		} else {
-			objective = 'find out what type of ghost we\'re dealing with';
+	if(command === 'followage' && myChannel) {
+		if(args.length === 0) {
+			fetchTextApi(`https://2g.be/twitch/following.php?user=${tags.username}&channel=${process.env.MY_CHANNEL}&format=mwdhms`)
+			.then(data => client.say(channel, `${data}`));
+		} else if(args.length > 0) {
+			fetchTextApi(`https://2g.be/twitch/following.php?user=${args[0].replace(/[^\w]/, '')}&channel=${process.env.MY_CHANNEL}&format=mwdhms`)
+			.then(data => client.say(channel, `@${data}`));
 		};
-		client.say(channel, `We need to ${objective}.`);
 	};
+});
 
-	if(command.toLowerCase() === 'o1' || command.toLowerCase() === 'o2' || command.toLowerCase() === 'o3') {
-		client.say(channel, 'We just completed an optional objective!');
-	};
+// A little admin automation
+client.on('resub', (channel, username, streakMonths, message, tags, methods) => {
+	client.say(channel, `Thank you ${tags.username} for the resub! <3`);
+});
+
+client.on('subscription', (channel, username, methods, message, tags) => {
+	client.say(channel, `Thank you ${tags.username} for the sub! <3`);
+});
+
+client.on('subgift', (channel, username, streakMonths, recipient, methods, tags) => {
+	client.say(channel, `Thank you ${tags.username} for gifting a sub to ${recipient}! <3`);
+});
+
+client.on('raided', (channel, username, viewers, tags) => {
+	client.say(channel, `${tags.username} is raiding with ${viewers} viewers! Thank you so much! <3`);
 });
