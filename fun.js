@@ -35,6 +35,20 @@ let bald = 0
 
 client.on('message', (channel, tags, message, self) => {
 
+	if((Math.ceil(Math.random() * 1000) >= 950) && tags.username !== 'buttsbot' && !self) {
+		const words = message.split(' ');
+		const replacenum = Math.ceil(Math.random() * 5);
+		let replacedwords = 0;
+
+		while(replacenum > replacedwords) {
+			const wordnum = Math.ceil(Math.random() * words.length);
+			words[(wordnum - 1)] = "arf";
+			replacedwords++;
+		};
+
+		client.say(channel, `${words.join(' ')}`);
+	};
+
 	if(tags.username === 'buttsbot' && message.toLowerCase() !== ':d') {
         client.say(channel, 'Buttsbot yes');
     };
@@ -47,6 +61,8 @@ client.on('message', (channel, tags, message, self) => {
 	const isBroadcaster = channel.slice(1) === tags.username;
 	const isModUp = isMod || isBroadcaster;
 	const myChannel = channel.slice(1) === process.env.MY_CHANNEL;
+
+	console.log(message);
 
     if(self || !message.startsWith('!')) return;
 
@@ -61,7 +77,7 @@ client.on('message', (channel, tags, message, self) => {
 		client.say(channel, `${args.join(' ')}`);
     };
 
-	if(command === 'baldheadedfuck') {
+	if(command === 'baldheadedfuck' && myChannel) {
 		bald++;
 		client.say(channel, `@Sealclap is a bald headed fuck.`);
 		if(bald === 1) {
@@ -85,10 +101,6 @@ client.on('message', (channel, tags, message, self) => {
 		} else if(args.length === 0) {
 			client.say(channel, `Fuck you, ${tags.username}.`)
 		};
-	};
-
-	if(command === 'couch' || command === 'hotcouch') {
-		client.say(channel, `@HotCouch is a big ol' cutie who is married to Sealclap <3`);
 	};
 
 	if(command === 'hotness' && myChannel) {
@@ -146,7 +158,7 @@ client.on('message', (channel, tags, message, self) => {
 
 	if(command === 'ftn' && myChannel) {
 		var today = new Date();
-		var bday = new Date(today.getFullYear(), 3, 5);
+		var bday = new Date(today.getFullYear(), 4, 27);
 		var oneDay = 1000 * 60 * 60 * 24;
 		if(today.getMonth() === 3 && today.getDate() > 5) {
 			bday.setFullYear(bday.getFullYear() + 1);
@@ -248,11 +260,60 @@ client.on('message', (channel, tags, message, self) => {
 	};
 
 	if((command === 'penissize' || command === 'penis') && channel.slice(1) !== 'saucyn3rd') {
-		const res = Math.floor(Math.random() * 10) + 1;
+		const res = Math.ceil(Math.random() * 10);
 		if(args.length === 0) {
 			client.say(channel, `@${tags.username}, your penis is probably ${res} inches long.`);
 		} else if(args.length > 0) {
 			client.say(channel, `@${args[0].replace(/[^\w]/, '')}, your penis size is probably ${res} inches long.`);
+		};
+	};
+
+	if((command === 'penissizeall' || command === 'penisall' || command === 'penissizechat' || command === 'penischat') && isModUp) {
+		const url = `${process.env.PENIS_ALL_ONE}${channel.slice(1)}${process.env.PENIS_ALL_TWO}`;
+		fetch(url)
+			.then(jsonData => jsonData.json())
+			.then(data => printIt(data));
+
+		let printIt = (data) => {
+			const streamer = data.chatters.broadcaster.join();
+			const vips = data.chatters.vips;
+			const mods = data.chatters.moderators;
+			const viewing = data.chatters.viewers;
+			const all = [];
+
+			all.push(streamer);
+
+			vips.forEach(el => {
+				if(el === 'buttsbot' || el === 'sealclapbot' || el === 'nightbot' || el === 'streamelements' || el === 'anotherttvviewer') {
+					return
+				}
+				if(el.length >= 1) {
+					all.push(el)
+				}
+			});
+
+			mods.forEach(el => {
+				if(el === 'buttsbot' || el === 'sealclapbot' || el === 'nightbot' || el === 'streamelements' || el === 'anotherttvviewer') {
+					return
+				}
+				if(el.length >= 1) {
+					all.push(el)
+				}
+			});
+
+			viewing.forEach(el => {
+				if(el === 'buttsbot' || el === 'sealclapbot' || el === 'nightbot' || el === 'streamelements' || el === 'anotherttvviewer') {
+					return
+				}
+				if(el.length >= 1) {
+					all.push(el)
+				}
+			});
+
+			all.forEach(el => {
+				const res = Math.ceil(Math.random() * 10);
+				client.say(channel, `@${el}, your penis is probably ${res} inches long.`);
+			});
 		};
 	};
 
@@ -318,7 +379,7 @@ client.on('message', (channel, tags, message, self) => {
 		client.say(channel, `⡪⡺⡸⡪⡺⣸⠪⠚⡘⠊⠓⠕⢧⢳⢹⡸⣱⢹⡸⡱⡱⡕⡵⡱⡕⣝⠜⢿⣿⣿`);
 		client.say(channel, `⡪⡺⡸⡪⡺⢐⢪⢑⢈⢁⢋⢊⠆⠲⠰⠬⡨⡡⣁⣉⠨⡈⡌⢥⢱⠐⢕⣼⣿⣿`);
 		client.say(channel, `⡪⣪⢣⢫⠪⢢⢅⢥⢡⢅⢅⣑⡨⡑⠅⠕⠔⠔⠄⠤⢨⠠⡰⠠⡂⣎⣼⣿⣿⣿`);
-		client.say(channel, `⠪⣪⡪⡣⡫⡢⡣⡣⡣⡣⡣⣣⢪⡪⡣⡣⡲⣑⡒⡎⡖⢒⣢⣥⣶⣿⣿⣿⣿⣿`)
+		client.say(channel, `⠪⣪⡪⡣⡫⡢⡣⡣⡣⡣⡣⣣⢪⡪⡣⡣⡲⣑⡒⡎⡖⢒⣢⣥⣶⣿⣿⣿⣿⣿`);
 		client.say(channel, `⢁⢂⠲⠬⠩⣁⣙⢊⡓⠝⠎⠮⠮⠚⢎⡣⡳⠕⡉⣬⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿`);
 		client.say(channel, `⢐⠐⢌⠐⠅⡂⠄⠄⢌⢉⠩⠡⡉⠍⠄⢄⠢⡁⡢⠠⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿`);
 	};
@@ -329,6 +390,53 @@ client.on('message', (channel, tags, message, self) => {
 		function unban() {
 			client.say(channel, `/untimeout ${tags.username}`);
 		};
+	};
+
+	if(command === 'uwuize') {
+		const uwuMessage = args.join(' ');
+		const uwuArray = uwuMessage.split('');
+		var uwuizedArr = [];
+
+		/* uwuArray.forEach(el => {
+			if(el === 'O') {
+				uwuizedArr.push('OwO');
+			} else if(el === 'o') {
+				uwuizedArr.push('owo');
+			} else if(el === 'U') {
+				uwuizedArr.push('UwU');
+			} else if(el === 'u') {
+				uwuizedArr.push('uwu');
+			} else {
+				uwuizedArr.push(el);
+			};
+		}); */
+
+		uwuArray.forEach(el => {
+			switch(el) {
+				case 'O':
+					uwuizedArr.push('OwO');
+					break;
+				case 'o':
+					uwuizedArr.push('owo');
+					break;
+				case 'U':
+					uwuizedArr.push('UwU');
+					break;
+				case 'u':
+					uwuizedArray.push('uwu');
+					break;
+				default:
+					uwuizedArr.push(el);
+					break;
+			};
+		});
+
+		uwuizedArr.push(' ');
+		uwuizedArr.push('UWU');
+
+		const uwuizedText = uwuizedArr.join('');
+
+		client.say(channel, `${uwuizedText}`);
 	};
 
 	// Calling APIs

@@ -19,15 +19,6 @@ const client = new tmi.Client({
 client.connect();
 console.log(`server.js connected to ${client.opts.channels.join(', ')}`);
 
-client.on('connected', (address, port) => {
-	if(twitchPlaysLive) {
-		setInterval(timedMessage, 600000)
-		function timedMessage() {
-			client.say('sealclap', `This game is now interactive! Type '!play' to see the list of commands or type '!chances' to see the likelihood of each command!`);
-		};
-	};
-});
-
 async function fetchTextApi(url) {
 	const response = await fetch(url);
 	const data = await response.text();
@@ -41,7 +32,7 @@ async function fetchJsonApi(url) {
 };
 
 // For TwitchPlays integration -- Just change .env variable
-var twitchPlaysLive = false;
+let twitchPlaysLive = true;
 const playCommands = process.env.PHASPLAY.split(', ');
 const randomCommands = process.env.PHASCOMMANDS.split(', ');
 const twentyPercent = process.env.PHASTWENTY.split(', ');
@@ -80,18 +71,6 @@ client.on('message', (channel, tags, message, self) => {
 
 	if(command === 'multistream' && isModUp && myChannel) {
 		client.say(channel, `We're streaming with ${args[0]}! Watch us both at https://multistre.am/${process.env.MY_CHANNEL}/${args.join('')}/layout4`);
-	};
-
-	if((command === 'discord' || command === 'dc') && myChannel) {
-		client.say(channel, `Join the Big Flick Energy discord! ${process.env.DISCORD}`);
-	};
-
-	if(command === 'twitchplays' && isBroadcaster) {
-		if(!twitchPlaysLive) {
-			twitchPlaysLive = true;
-		} else if(twitchPlaysLive) {
-			twitchPlaysLive = false;
-		};
 	};
 
 	if(command === 'play' && twitchPlaysLive) {
@@ -154,3 +133,10 @@ client.on('subgift', (channel, username, streakMonths, recipient, methods, tags)
 client.on('raided', (channel, username, viewers, tags) => {
 	client.say(channel, `${tags.username} is raiding with ${viewers} viewers! Thank you so much! <3`);
 });
+
+if (twitchPlaysLive === true) {
+	const twitchPlaysMessage = () => {
+		client.say('sealclap', `You can interact with my game! Type '!play' to view commands or '!chances' to see the chances!`)
+	};
+	setInterval(twitchPlaysMessage, 600000);
+};
