@@ -3,14 +3,31 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server-start": "nodemon server.js",
+    "phas-start": "nodemon phas.js",
+    "fun-start": "nodemon fun.js",
+    "weather-start": "cd ../coding-stuff/projects/web-scrapers/weather && npm run start",
+    "fml-start": "cd ../coding-stuff/projects/web-scrapers/fmylife && npm run start",
+    "start": "npm-run-all -p -r server-start phas-start fun-start weather-start fml-start"
   },
   "author": "Sealclap",
   "license": "ISC",
   "dependencies": {
+    "-": "^0.0.1",
+    "axios": "^0.25.0",
+    "cheerio": "^1.0.0-rc.10",
+    "concurrently": "^7.0.0",
+    "config": "^3.3.7",
     "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "mathjs": "^10.0.2",
+    "node-fetch": "^3.2.0",
+    "save-dev": "^0.0.1-security",
     "tmi.js": "^1.8.5"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }
